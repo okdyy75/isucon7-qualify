@@ -417,6 +417,9 @@ $app->post('/add_channel', function (Request $request, Response $response) {
 })->add($loginRequired);
 
 $app->post('/profile', function (Request $request, Response $response) {
+    if (empty($request->getParams())) {
+        return $response->withStatus(400);
+    }
     $userId = FigRequestCookies::get($request, 'user_id')->getValue();
     if (!$userId) {
         return $response->withStatus(403);
